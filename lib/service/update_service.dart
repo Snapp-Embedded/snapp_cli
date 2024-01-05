@@ -5,16 +5,13 @@ import 'package:pub_updater/pub_updater.dart';
 import 'package:snapp_cli/utils/const.dart';
 import 'package:yaml/yaml.dart';
 
-class UpdateController {
+class UpdateService {
   final PubUpdater pubUpdater = PubUpdater();
 
   Future<String> currentVersion() async {
     final pkgConfig = (await findPackageConfigUri(Platform.script))!;
 
     final path = pkgConfig.resolve(Uri.parse('package:$kPackageName/'));
-
-    print('script: ${Platform.script}');
-    print('path: $path');
 
     final pubspecPath = path!.resolve('../pubspec.yaml').toFilePath();
 
@@ -25,8 +22,6 @@ class UpdateController {
     final pubspec = loadYaml(pubspecContent);
 
     final versionString = pubspec['version'] as String?;
-
-    print('versionString: $versionString');
 
     return versionString!;
   }

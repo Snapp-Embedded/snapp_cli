@@ -1,3 +1,12 @@
+## 0.4.0 BETA
+* add bootstrap command by @payam-zahedi
+* add automatic enable configs by @payam-zahedi in [#9](https://github.com/Snapp-Embedded/snapp_cli/pull/9) 
+* Create a passwordless ssh connection by @payam-zahedi in [#10](https://github.com/Snapp-Embedded/snapp_cli/pull/10) 
+* Release/v.0.3.2 by @payam-zahedi in [#11](https://github.com/Snapp-Embedded/snapp_cli/pull/11) 
+* add install-flutter command  by @payam-zahedi in [#12](https://github.com/Snapp-Embedded/snapp_cli/pull/12) 
+* add new interact spinner by @payam-zahedi in [#14](https://github.com/Snapp-Embedded/snapp_cli/pull/14) 
+* Refactor v0.4.0 by @payam-zahedi in [#9](https://github.com/Snapp-Embedded/snapp_cli/pull/9) 
+
 ## 0.3.2 BETA
 
 - Add check for update for cli 

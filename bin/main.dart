@@ -15,13 +15,6 @@ Future<void> main(List<String> arguments) async {
     await sdkManager.initialize();
 
     exitCode = await runInContext(() async {
-      // Check if custom devices feature is enabled
-      // If not, throw an error
-      if (!sdkManager.areCustomDevicesEnabled) {
-        throwToolExit('Custom devices feature must be enabled. '
-            'Enable using `flutter config --enable-custom-devices`.');
-      }
-
       return await SnappCliCommandRunner(
             flutterSdkManager: sdkManager,
           ).run(arguments) ??
@@ -39,5 +32,10 @@ Future<void> main(List<String> arguments) async {
     exitCode = 1;
   }
 
-  io.exit(exitCode);
+  await _flushThenExit(exitCode);
+}
+
+Future<void> _flushThenExit(int status) {
+  return Future.wait<void>([io.stdout.close(), io.stderr.close()])
+      .then<void>((_) => io.exit(status));
 }

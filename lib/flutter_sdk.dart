@@ -4,6 +4,7 @@ import 'dart:io' as io;
 
 import 'package:flutter_tools/src/base/logger.dart';
 import 'package:flutter_tools/src/base/platform.dart';
+import 'package:flutter_tools/src/base/process.dart';
 import 'package:flutter_tools/src/base/terminal.dart';
 import 'package:flutter_tools/src/custom_devices/custom_devices_config.dart';
 import 'package:flutter_tools/src/artifacts.dart';
@@ -35,6 +36,9 @@ class FlutterSdkManager {
       _provider(globals.customDevicesConfig);
 
   ProcessManager get processManager => _provider(globals.processManager);
+  ProcessUtils get processRunner =>
+      ProcessUtils(processManager: processManager, logger: logger);
+
   Terminal get terminal => _provider(globals.terminal);
   Platform get platform => _provider(globals.platform);
   Logger get logger => _provider(globals.logger);

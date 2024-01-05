@@ -14,48 +14,20 @@
     <a href="https://github.com/Snapp-Embedded/snapp_cli/graphs/contributors"><img src="https://badgen.net/github/contributors/Snapp-Embedded/snapp_cli" alt="Contributors"></a>
     <a href="https://github.com/Snapp-Embedded/snapp_cli/blob/main/LICENSE"><img src="https://badgen.net/github/license/Snapp-Embedded/snapp_cli" alt="License"></a>
     <br>       
-    <a href="https://app.codecov.io/gh/Snapp-Embedded/snapp_cli"><img src="https://img.shields.io/codecov/c/github/Snapp-Embedded/snapp_cli?logo=codecov&logoColor=white" alt="Coverage Status"></a>
 </p>
-
 
 
 ## snapp\_cli
 
-`snapp_cli` is a Dart command-line tool designed to simplify the process of adding custom devices to the Flutter SDK. With this tool, you can configure and run your Flutter apps on non-standard or remote devices, such as a Raspberry Pi, while maintaining essential Flutter features like hot reload and hot restart.
+`snapp_cli` is a powerful command-line interface tool designed to simplify the integration of embedded devices (like Raspberry Pi) with Flutter applications. Effortlessly manage your embedded devices, establish secure SSH connections, and streamline the development process by installing Flutter directly onto your custom devices from your PC.
 
 ## Features
-
-**Custom Device Configuration:** `snapp_cli` allows you to add and manage custom devices for the Flutter SDK. You can specify various device settings, including device names, IP addresses, and port numbers, making it easy to configure custom devices to meet your specific needs.
-
-**Remote Debugging:** With `snapp_cli`, you can remotely debug your Flutter apps on custom devices, such as a Raspberry Pi or other remote hardware. You can run your Flutter app on your custom device with features like hot reload, hot restart, and more, providing a seamless development experience.
-
-**Configurable IP Address:** Easily change the IP address of remote devices in the configuration file if it changes on the device due to DHCP or other reasons. This flexibility ensures that you can adapt to changing network conditions and continue your development without interruption.
-
-## Preconditions
-
-Before using `snapp_cli`, please ensure that you meet the following preconditions:
-
--   **Secure SSH Connection:** You should have a secure SSH connection between your host machine and the remote device, established using SSH keys. Password-based SSH connections are not supported.
-    - Check out this [guide](https://pimylifeup.com/raspberry-pi-ssh-keys/) for more information on setting up SSH keys.
--   **Flutter Linux Configuration:** Make sure that Flutter's Linux configuration is enabled on your host machine. You can enable it using the following command:
-
-``` bash
-flutter config --enable-linux-desktop
-```
-
-- **Flutter Custom Devices Configuration:** Ensure that Flutter's custom-devices configuration is also enabled on your host machine. You can enable it with the following command:
-
-``` bash
-flutter config --enable-custom-devices
-```
-- **Flutter Installation on Remote Device:** Flutter should be installed and configured on your remote device. If you are using a Raspberry Pi, you can use the `snapp_installer` to install Flutter on your device.
-
-- **Know the Path to Flutter on Remote Device:** You should know the exact path to the Flutter installation on your remote device. You can find the path using the following command on the remote device:
-
-``` bash
-which flutter
-```
-Ensure that you've met these preconditions to use snapp_cli effectively with custom devices and remote debugging.
+- **🛠️ Single Command Setup:** Prepare your custom device completely by adding it to Flutter, establishing SSH connection, installing Flutter, and running your app—all with a single command.
+- **📱 Device Management:** Add, list, and remove custom(**embedded**) devices effortlessly.
+- **🔒 Automatic SSH Connection:** Configure and establish SSH connections to devices with ease.
+- **🚀 Flutter Installation:** Install Flutter directly onto your custom devices from your PC.
+- **🔥 Run & Debug Flutter Apps:** Utilize hot reload, hot restart, and Dart DevTools for efficient app development.
+- **🎛️ User-Friendly Interface:** Intuitive CLI for seamless navigation and usage.
 
 ## Installation
 
@@ -67,51 +39,55 @@ dart pub global activate snapp_cli
 
 Make sure that system cache bin directory is added to your system's PATH to use snapp_cli globally. follow this link for more information: [Running a script from your PATH](https://dart.dev/tools/pub/cmd/pub-global#running-a-script-from-your-path "Running a script from your PATH")
 
-## Commands
+## Usage
 
-`snapp_cli` provides the following commands:
+#### Single Command Setup - **Bootstrap**
 
-- **devices:** Manage custom devices in the Flutter SDK. with this command you can add, delete, list, and update custom devices. Following sub-commands are available for this command:
-   - **add:** Add a custom device configuration.
-      - Use the `add` command to add and configure a custom device for the Flutter SDK. You can specify the device name, IP address, and other information to customize your development environment.
+Bootstrap command is a way to setup a device from scratch.
+It will add a new device to custom devices, create a ssh connection to the device,
+install flutter on the device and finally help you to run your app on the device.
 
-   - **delete:** Delete a custom device configuration.
-      - The `delete` command allows you to remove a previously configured custom device from your settings.
+```bash
+$ snapp_cli bootstrap
+```
 
-   - **list:** List configured custom devices.
-      - The `list` command displays a list of all the custom devices that is available on the flutter SDK.
+#### Device Management
 
-   - **update-ip:** Update the IP address of a custom device.
-      - The `update-ip` command is used to modify the IP address of an existing custom device configuration. This is useful when the device's IP address changes, such as due to DHCP, and you need to update your settings. Example:
-      ``` bash
-      snapp_cli devices update-ip 
-      ```
+- **List Devices:** Display all connected/embedded devices.
+    ```bash
+    $ snapp_cli devices list
+    ```
+- **Add a Device:** Add a new device to the Flutter SDK.
+   ```bash
+   $ snapp_cli devices add 
+   ```
+- **Delete a Device:** Remove a device from the Flutter SDK.
+    ```bash
+    $ snapp_cli devices delete
+    ```
+- **Update Device IP:** Update the IP address of a device.
+    ```bash
+    $ snapp_cli devices update-ip
+    ```
+- **Install Flutter:** Install Flutter directly onto a device.
+    ```bash
+    $ snapp_cli devices install-flutter
+    ```
 
+#### SSH Connection
 
-------------
+- **Create SSH Connection:** Create a passwordless SSH connection to a device.
+    ```bash
+    $ snapp_cli ssh create-connection
+    ```
+- **Test SSH Connection:** Test a passwordless SSH connection to a device.
+    ```bash
+    $ snapp_cli ssh test-connection
+    ```
 
+------------------------------------
 
 Each command has specific options and usage, which you can explore further by running `snapp_cli --help` or `snapp_cli <command> --help`.
-
-## add Command
-
-The `add` command allows you to add and configure a custom device for the Flutter SDK. When you run this command, `snapp_cli` will prompt you with a series of questions to gather the necessary information for custom device configuration.
-
-
-Use this command to interactively specify the settings for a custom device that you want to use for your Flutter development. The questions will cover details such as:
-
-- SSH Connection Details: You'll be asked for the IP address of your remote device and the username for the SSH connection.
-
-- Path to Flutter on the Remote Device: You'll be prompted to provide the exact path to the Flutter installation on your remote device.
-
-#### Usage 
-To add a custom device, simply run the following command:
-
-```
-snapp_cli devices add
-```
-
-snapp_cli will then guide you through the process, prompting you with questions to gather the necessary information for your custom device configuration. Follow the on-screen prompts to complete the configuration.
 
 ## Troubleshooting
 

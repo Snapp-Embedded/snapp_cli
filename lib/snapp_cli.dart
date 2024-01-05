@@ -1,2 +1,2 @@
-export 'command_runner/command_runner.dart';
-export 'utils/flutter_sdk.dart';
+export 'command_runner.dart';
+export 'flutter_sdk.dart';

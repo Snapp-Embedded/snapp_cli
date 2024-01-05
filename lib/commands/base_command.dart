@@ -2,26 +2,35 @@
 
 import 'package:args/args.dart';
 import 'package:args/command_runner.dart';
-import 'package:flutter_tools/src/base/logger.dart';
 import 'package:flutter_tools/src/custom_devices/custom_devices_config.dart';
-import 'package:snapp_cli/utils/flutter_sdk.dart';
+import 'package:snapp_cli/host_runner/host_runner_platform.dart';
+import 'package:snapp_cli/flutter_sdk.dart';
+import 'package:flutter_tools/src/base/process.dart';
+
+export 'package:flutter_tools/src/base/common.dart';
+export 'package:snapp_cli/service/logger_service.dart';
+export 'package:snapp_cli/service/interaction_service.dart';
 
 abstract class BaseSnappCommand extends Command<int> {
   BaseSnappCommand({
     required this.flutterSdkManager,
-  });
+  })  : hostPlatform = HostRunnerPlatform.build(flutterSdkManager.platform),
+        processRunner = ProcessUtils(
+            processManager: flutterSdkManager.processManager,
+            logger: flutterSdkManager.logger);
 
   final FlutterSdkManager flutterSdkManager;
+  final ProcessUtils processRunner;
+
+  /// create a HostPlatform instance based on the current platform
+  /// with the help of this class we can make the commands platform specific
+  /// for example, the ping command is different on windows and linux
+  ///
+  /// only supports windows, linux and macos
+  final HostRunnerPlatform hostPlatform;
 
   CustomDevicesConfig get customDevicesConfig =>
       flutterSdkManager.customDeviceConfig;
-  Logger get logger => flutterSdkManager.logger;
-
-  void printSpaces([int n = 2]) {
-    for (int i = 0; i < n; i++) {
-      logger.printStatus(' ');
-    }
-  }
 }
 
 extension ArgResultsExtension on ArgResults {
